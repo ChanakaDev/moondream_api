@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+  moondream-api:
+    build: .
+    container_name: moondream-api
+    ports:
+      - "8020:8019"   # Host:Container → Use 8020 on host
+    volumes:
+      - moondream_data:/usr/local/lib/ollama
+    restart: unless-stopped
+
+volumes:
+  moondream_data:
