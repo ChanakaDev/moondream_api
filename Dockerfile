@@ -1,7 +1,7 @@
 # Use lightweight Python image
 FROM python:3.11-slim
 
-# Install dependencies (added zstd)
+# Install dependencies
 RUN apt-get update && apt-get install -y \
     curl \
     unzip \
@@ -23,11 +23,12 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Install Ollama
 RUN curl -fsSL https://ollama.com/install.sh | sh
 
-# Pull the Moondream model
-RUN ollama pull moondream:latest
+# Copy entrypoint script
+COPY entrypoint.sh /app/
+RUN chmod +x /app/entrypoint.sh
 
-# Expose API port inside container
+# Expose API port
 EXPOSE 8019
 
-# Run FastAPI server
-CMD ["uvicorn", "moondream_api:app", "--host", "0.0.0.0", "--port", "8019"]
+# Run entrypoint
+CMD ["/app/entrypoint.sh"]
