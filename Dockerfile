@@ -1,8 +1,15 @@
 # Use lightweight Python image
 FROM python:3.11-slim
 
-# Install dependencies
-RUN apt-get update && apt-get install -y curl unzip tar wget git && rm -rf /var/lib/apt/lists/*
+# Install dependencies (added zstd)
+RUN apt-get update && apt-get install -y \
+    curl \
+    unzip \
+    tar \
+    wget \
+    git \
+    zstd \
+    && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
 WORKDIR /app
